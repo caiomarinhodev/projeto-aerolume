@@ -6,9 +6,9 @@ from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db.models import permalink
 
-
 # Create your models here.
 from django.template.defaultfilters import safe
+from django.utils.timezone import now
 
 
 class TimeStamped(models.Model):
@@ -105,7 +105,7 @@ class TeamMember(models.Model):
     facebook = models.URLField(blank=True, null=True)
     googleplus = models.URLField(blank=True, null=True)
     twitter = models.URLField(blank=True, null=True)
-    lattes= models.URLField(blank=True, null=True)
+    lattes = models.URLField(blank=True, null=True)
     orcid = models.URLField(blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     role = models.CharField(max_length=100)
@@ -129,17 +129,60 @@ class Observatory(TimeStamped):
     def __unicode__(self):
         return u'%s' % (self.name)
 
-class DataEntry(TimeStamped):
+
+class Instrument(TimeStamped):
+    class Meta:
+        verbose_name = "Instrument"
+        verbose_name_plural = "Instruments"
+
+    name = models.CharField(max_length=100)
+    key = models.CharField(max_length=3)
+    is_visible = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return u'%s' % (self.name)
+
+
+class Em(TimeStamped):
+    class Meta:
+        verbose_name = "EM"
+        verbose_name_plural = "EMs"
+
+    name = models.CharField(max_length=100)
+    key = models.CharField(max_length=3)
+    is_visible = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return u'%s' % (self.name)
+
+
+class Type(TimeStamped):
+    class Meta:
+        verbose_name = "Type"
+        verbose_name_plural = "Types"
+
+    name = models.CharField(max_length=100)
+    key = models.CharField(max_length=3)
+    is_visible = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return u'%s' % (self.name)
+
+
+class DataEntry(models.Model):
     class Meta:
         verbose_name = "DataEntry"
         verbose_name_plural = "DataEntries"
 
     title = models.CharField(max_length=150, blank=True, null=True)
     movie = models.URLField(blank=True, null=True)
-    instrument = models.CharField(max_length=100, blank=True, null=True)
-    observatory = models.ForeignKey(Observatory, on_delete=models.CASCADE)
-    text = RichTextField()
+    instrument = models.ForeignKey(Instrument, on_delete=models.CASCADE, blank=True, null=True)
+    observatory = models.ForeignKey(Observatory, on_delete=models.CASCADE, blank=True, null=True)
+    em = models.ForeignKey(Em, on_delete=models.CASCADE, blank=True, null=True)
+    type = models.ForeignKey(Type, on_delete=models.CASCADE, blank=True, null=True)
+    # text = RichTextField()
     is_visible = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=now())
 
     def __unicode__(self):
         return u'%s' % (self.title)

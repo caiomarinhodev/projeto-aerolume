@@ -61,11 +61,23 @@ class PostAdmin(admin.ModelAdmin):
 class DataEntryAdmin(admin.ModelAdmin):
     inlines = [ImageDataEntryInline, ]
     form = DataEntryForm
-    list_display = ('title', 'id', 'created_at', 'published_at', 'is_visible')
+    list_display = ('title', 'id', 'created_at', 'instrument', 'observatory', 'is_visible')
     ordering = ['-created_at']
 
 
 class ObservatoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'key', 'id', 'created_at')
+
+
+class InstrumentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'key', 'id', 'created_at')
+
+
+class EmAdmin(admin.ModelAdmin):
+    list_display = ('name', 'key', 'id', 'created_at')
+
+
+class TypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'key', 'id', 'created_at')
 
 
@@ -95,4 +107,7 @@ admin.site.register(ImageDataEntry)
 admin.site.register(Post, PostAdmin)
 admin.site.register(TeamMember, TeamMemberAdmin)
 admin.site.register(Observatory, ObservatoryAdmin)
+admin.site.register(Instrument, InstrumentAdmin)
+admin.site.register(Em, EmAdmin)
+admin.site.register(Type, TypeAdmin)
 admin.site.register(DataEntry, DataEntryAdmin)
