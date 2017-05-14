@@ -129,7 +129,6 @@ class Observatory(TimeStamped):
     def __unicode__(self):
         return u'%s' % (self.name)
 
-
 class DataEntry(TimeStamped):
     class Meta:
         verbose_name = "DataEntry"
