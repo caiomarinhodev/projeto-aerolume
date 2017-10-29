@@ -44,7 +44,7 @@
                         <div class="col-md-2 col-sm-2">
                             <div class="team-member" data-animate="fadeInUp">
                                 <div class="image">
-                                    <a href="{{ member.image.url }}">
+                                    <a href="{{ member.site }}" target="_blank">
                                         {% if member.image.url %}
                                             <img src="{{ member.image.url }}" alt=""
                                                  class="img-responsive img-circle"
@@ -56,9 +56,9 @@
                                         {% endif %}
                                     </a>
                                 </div>
-                                <h3><a href="#">{{ member.name|truncatechars:"21" }}</a></h3>
+                                <h3><a href="{{ member.site }}" target="_blank">{{ member.name|truncatechars:"21" }}</a></h3>
 
-                                <p class="role">{{ member.role }}</p>
+                                <p class="role"><a href="{{ member.site }}" target="_blank">{{ member.role }}</a></p>
 
                                 <div class="social">
                                     {% if member.facebook %}
